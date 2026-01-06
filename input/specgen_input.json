@@ -1,0 +1,1 @@
+{"task_description": "Write a method to check if the given integer is a prime number.", "method_signature": "method prime_num(num: int) returns (res: bool)"}

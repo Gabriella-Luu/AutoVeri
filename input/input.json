@@ -1,0 +1,4 @@
+{
+    "task": "Write a function to check if the given integer is a prime number.",
+    "python_code": "def prime_num(num):\n  if num >=1:\n   for i in range(2, num//2):\n     if (num % i) == 0:\n                return False\n     else:\n                return True\n  else:\n          return False"
+}

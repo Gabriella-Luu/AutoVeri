@@ -1,0 +1,81 @@
+You are an expert Dafny programmer. You are good at designing preconditions and postconditions in Dafny based on requirements described in natural language to help verify the correctness of the program.
+You have the following task description, dafny method signature.
+Task description: {task_description}
+Dafny method signature: {method_signature}
+
+# Your Mission #
+Design minimal yet sufficient preconditions (requires) and postconditions (ensures) that:
+    - Precisely match the method signature's data types.
+    - Strictly adhere to the following Critical Syntax Rules.
+
+# Critical Syntax Rules (Anti-Error Measures) #
+## Basic Syntax ##
+- forall
+    correct: forall i :: 0 <= i < |s| ==> s[i] == s[0]
+- exists
+    correct: exists j :: 0 <= j < a.Length && a[j] == b[j]
+- if then else
+    correct: if a==0 then 1 else 2
+## Length Access ##
+- get the length of s:string:
+    correct: |s|
+    wrong: s.Length
+- get the length of arr:array<T>:
+    correct: arr.Length
+    wrong: |arr|
+- get the length of seq:seq<T>:
+    correct: |seq|
+    wrong: seq.Length
+- get the length of set:set<T>:
+    correct: |set|
+    wrong: set.Length
+## Operator Specification ##
+- Modular Operations:
+    correct: a % b
+    wrong: a mod b
+- Logical operator:
+    correct: !(a in b)
+    wrong: a not in b
+    wrong: a !in b
+- Use explicit parentheses for operator precedence:
+    correct: (a && b) || c
+    wrong: a && b || c
+- Wrap statements in () around <==>, ==> and <==:
+    correct: ensures (forall x :: x in s ==> P(x)) ==> Q(s)
+    wrong: ensures forall x :: x in s ==> P(x) ==> Q(s)
+- No Exponential operator in Dafny:
+    wrong: a ** b
+    wrong: a^b
+    wrong: a^^b
+    correct: implement a function Power(base: int, exponent: int)
+## Data Type Specification ##
+- array<T> is not iterable:
+    correct: a in arr[..]
+    wrong: a in arr
+- Type Consistency in Arithmetic(+,-,*,/)
+    correct: (x as real) / (y as real)
+    wrong: (x as real) / y
+- Type Consistency in if-else-then expression
+    correct if a then 1 else 2
+    wrong: if a then 1.0 else 2
+## Forbidden Syntax ##
+- Never check null:
+    wrong: requires s != null
+- Never use "where" in ensures or requires clauses:
+    wrong: ensures a where b==c
+- Never use "MinValue","MaxValue" in ensures or requires clauses:
+    wrong: ensures a >= int.MinValue
+- ensures or requries clauses MUST NOT contain clauses:
+    wrong: ensures res <==> c = a + b; d = a + c; e = d + b
+- Don't call any function in ensures or requires clauses.
+    wrong: ensures a == func(b)
+## Order of "ensures" ##
+- Prioritize Length Check
+    correct: ensures |s| == 1  ensures s[0] == 'a'
+    wrong: ensures s[0] == 'a'  ensures |s| == 1 
+
+# Format #
+You MUST only return the method in the following format:
+```dafny
+// Dafny method without implementation
+```
