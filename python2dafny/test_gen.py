@@ -27,7 +27,8 @@ def get_config():
     env_config["input_json_path"] = config.get('DEFAULT', 'input_json_path')
     env_config["translation_path"] = config.get('TRANS', 'translation_path')
     env_config["test_cases_num"] = int(config.get('TRANS', 'test_cases_num'))
-    env_config["test_set_generation_json_path"] = config.get('TRANS', 'test_set_generation_json_path')
+    env_config["test_set_json_path"] = config.get('TRANS', 'test_set_json_path')
+    env_config["max_test_gen_iterations"] = int(config.get('TRANS', 'max_test_gen_iterations'))
     return api_config, env_config
 
 def template(code):
@@ -221,48 +222,53 @@ def solve(
     api_config, env_config,
     SourceCode: str,
 ):
-    testset = {"TestCase": ""}
+    for iterations in range(env_config["max_test_gen_iterations"]):
+        testset = {"TestCase": ""}
 
-    # for iterations in range(env_config["test_cases_num"]):
-    prompt = template(SourceCode)
-    if ("gpt" in api_config["model"]): 
-        client = OpenAI(api_key=api_config["openai_api_key"], base_url=api_config["openai_base_url"])
-    if ("deepseek" in api_config["model"]): 
-        client = OpenAI(api_key=api_config["deepseek_api_key"], base_url=api_config["deepseek_base_url"])
+        # for iterations in range(env_config["test_cases_num"]):
+        prompt = template(SourceCode)
+        if ("gpt" in api_config["model"]): 
+            client = OpenAI(api_key=api_config["openai_api_key"], base_url=api_config["openai_base_url"])
+        if ("deepseek" in api_config["model"]): 
+            client = OpenAI(api_key=api_config["deepseek_api_key"], base_url=api_config["deepseek_base_url"])
 
-    # response = client.beta.chat.completions.parse(
-    #     model=api_config["model"],
-    #     messages=[{"role": "user", "content": prompt}],
-    #     temperature=api_config["temp"],
-    # )
-    # match = re.search(
-    #     r"```python\n(?P<code>.+?)\n```",
-    #     response.choices[0].message.content,
-    #     re.DOTALL,
-    # )
-    # if match:
-    #     inputs = match.group("code")
-    
-    inputs = "input1=(2,)\ninput2=(3,)\ninput3=(4,)\ninput4=(5,)\ninput5=(6,)\ninput6=(7,)\ninput7=(8,)\ninput8=(9,)\ninput9=(10,)\ninput10=(11,)"
-    LocalNameSpace = {}
-    exec(SourceCode, LocalNameSpace)
-    exec(inputs, LocalNameSpace)
-    pattern = r'def\s+(\w+)\s*\('
-    match = re.search(pattern, SourceCode, re.MULTILINE)
-    if match:
-        method_name = match.group(1)
-    assertions = ""
-    for i in range(10):
-        tmp = eval("str(input%d)" % (i + 1), LocalNameSpace)
-        assertions += (
-            "assert %s%s == "% (method_name, tmp)
-            + str(eval(method_name + tmp, LocalNameSpace))
-            + "\n"
+        response = client.beta.chat.completions.parse(
+            model=api_config["model"],
+            messages=[{"role": "user", "content": prompt}],
+            temperature=api_config["temp"],
         )
-    print(
-        "Assertions Generated %d" % (iterations),
-        flush=True,
-    )
+        match = re.search(
+            r"```python\n(?P<code>.+?)\n```",
+            response.choices[0].message.content,
+            re.DOTALL,
+        )
+        if match:
+            inputs = match.group("code")
+    
+        # inputs = "input1=(1,)\ninput2=(3,)\ninput3=(3,)\ninput4=(5,)\ninput5=(6,)\ninput6=(7,)\ninput7=(8,)\ninput8=(9,)\ninput9=(10,)\ninput10=(11,)"
+        LocalNameSpace = {}
+        try:
+            exec(SourceCode, LocalNameSpace)
+            exec(inputs, LocalNameSpace)
+        except:
+            continue
+        pattern = r'def\s+(\w+)\s*\('
+        match = re.search(pattern, SourceCode, re.MULTILINE)
+        if match:
+            method_name = match.group(1)
+        assertions = ""
+        for i in range(10):
+            tmp = eval("str(input%d)" % (i + 1), LocalNameSpace)
+            assertions += (
+                "assert %s%s == "% (method_name, tmp)
+                + str(eval(method_name + tmp, LocalNameSpace))
+                + "\n"
+            )
+        print(
+            "Assertions Generated",
+            flush=True,
+        )
+        break
     
     global func_calls, TmpVars, SrcName
     func_calls = 0
@@ -290,7 +296,7 @@ def main():
         % (passed, len(testset), passed * 100.0 / len(testset))
     )
 
-    with open(env_config["test_set_generation_json_path"] + "test_cases.json", "w", encoding="utf-8") as JSON:
+    with open(env_config["test_set_json_path"] + "/test_cases.json", "w", encoding="utf-8") as JSON:
         json.dump(testset, JSON)
 
     print("Done")

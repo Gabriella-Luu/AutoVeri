@@ -27,7 +27,7 @@ def get_config():
     env_config = dict()
     env_config["input_json_path"] = config.get('DEFAULT', 'input_json_path')
     env_config["translation_path"] = config.get('TRANS', 'translation_path')
-    env_config["max_fixing_iterations"] = float(config.get('TRANS', 'max_fixing_iterations'))
+    env_config["max_fixing_iterations"] = int(config.get('TRANS', 'max_fixing_iterations'))
     env_config["test_set_json_path"] = config.get('TRANS', 'test_set_json_path')
 
     return api_config, env_config
@@ -540,7 +540,7 @@ def generate(
             code[lineno] = "//" + code[lineno]
    
     code = "\n".join(code)
-    DafnyFilePath = Path(env_config["translation_path"]).joinpath(".dfy")
+    DafnyFilePath = Path(env_config["translation_path"]).joinpath("trans.dfy")
     DafnyFile = open(file=DafnyFilePath, mode="w", encoding="utf-8")
     print(
         (
@@ -568,14 +568,15 @@ def realtime_eval(
     TestCode = Code + "\n" + TestCase
     with open(CodePath, "w", encoding="utf-8") as DafnyFile:
         print(TestCode, file=DafnyFile, flush=True)
+    # process = subprocess.run(
+    #     "dafny test %s --no-verify --standard-libraries" % CodePath,
+    #     timeout=180,
+    # )
     process = subprocess.run(
         "dafny test %s --no-verify --standard-libraries" % CodePath,
-        timeout=settings.timeout_per_task,
-    )
-    process = subprocess.run(
-        "dafny test %s --no-verify --standard-libraries" % CodePath,
-        timeout=settings.timeout_per_task,
+        timeout=180,
         capture_output=True,
+        shell = True
     )
     ret = process.returncode
    
@@ -654,11 +655,11 @@ def solve(api_config, env_config, problem, testset):
     code = problem["python_code"]
     error_messages = []
     for iter in range(env_config["max_fixing_iterations"]):
-        generate(api_config, env_config, code, status, error_messages)
+        # generate(api_config, env_config, code, status, error_messages)
         old_status = copy.deepcopy(status)
         old_error_messages = copy.deepcopy(error_messages)
         status, error_messages = realtime_eval(
-            Path(env_config["translation_path"]).joinpath(".dfy"),
+            Path(env_config["translation_path"]).joinpath("trans.dfy"),
             testset["TestCase"],
         )
         if status == "passed":
@@ -679,7 +680,7 @@ def main():
 
     with open(env_config["input_json_path"], "r", encoding="utf-8") as JSON:
         problem = json.load(JSON)
-    with open(env_config["test_set_json_path"], "r", encoding="utf-8") as JSON:
+    with open(env_config["test_set_json_path"] + "/test_cases.json", "r", encoding="utf-8") as JSON:
         testset = json.load(JSON)
 
     solve(api_config, env_config, problem, testset)
