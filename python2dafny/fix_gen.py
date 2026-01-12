@@ -568,10 +568,6 @@ def realtime_eval(
     TestCode = Code + "\n" + TestCase
     with open(CodePath, "w", encoding="utf-8") as DafnyFile:
         print(TestCode, file=DafnyFile, flush=True)
-    # process = subprocess.run(
-    #     "dafny test %s --no-verify --standard-libraries" % CodePath,
-    #     timeout=180,
-    # )
     process = subprocess.run(
         "dafny test %s --no-verify --standard-libraries" % CodePath,
         timeout=180,
@@ -593,7 +589,7 @@ def realtime_eval(
             try:
                 buggy_code = TestCode.split("\n")
                 report = process.stdout.decode().replace("\\r", "")
-                messages = re.findall(r".dfy(.+?)\\n", report)
+                messages = re.findall(r'\.dfy(\([^\n]+)', report)
                 regex_messages = [
                     re.match(
                         r"\((?P<lineno>\d+),(?P<pos>\d+)\): (?P<error>.+)",
@@ -603,7 +599,7 @@ def realtime_eval(
                 ]
                 error_messages = [
                     {
-                        "content": buggy_code[int(regex_message.group("lineno"))],
+                        "content": buggy_code[int(regex_message.group("lineno"))-1],
                         "line": int(regex_message.group("lineno")),
                         "position": int(regex_message.group("pos")),
                         "error_type": parse_errmsg(regex_message.group("error")),
@@ -655,7 +651,7 @@ def solve(api_config, env_config, problem, testset):
     code = problem["python_code"]
     error_messages = []
     for iter in range(env_config["max_fixing_iterations"]):
-        # generate(api_config, env_config, code, status, error_messages)
+        generate(api_config, env_config, code, status, error_messages)
         old_status = copy.deepcopy(status)
         old_error_messages = copy.deepcopy(error_messages)
         status, error_messages = realtime_eval(
@@ -664,16 +660,16 @@ def solve(api_config, env_config, problem, testset):
         )
         if status == "passed":
             return
-        if status == "syntax_error" and old_status != "syntax_error":
+        if status == "syntax_error" and old_status != "syntax_error" and old_status != "translate":
             status, error_messages = old_status, old_error_messages
         else:
             with open(
-                Path(env_config["translation_path"]).joinpath(".dfy")
+                Path(env_config["translation_path"]).joinpath("trans.dfy")
             ) as DAFNY:
                 code = DAFNY.read()
             code = code.split("\n")
             code = ["" if line.startswith("import") else line for line in code]
-            code = "\\n".join(code)
+            code = "\n".join(code)
 
 def main():
     api_config, env_config = get_config()
