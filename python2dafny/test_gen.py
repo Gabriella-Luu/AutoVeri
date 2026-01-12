@@ -245,7 +245,6 @@ def solve(
         if match:
             inputs = match.group("code")
     
-        # inputs = "input1=(1,)\ninput2=(3,)\ninput3=(3,)\ninput4=(5,)\ninput5=(6,)\ninput6=(7,)\ninput7=(8,)\ninput8=(9,)\ninput9=(10,)\ninput10=(11,)"
         LocalNameSpace = {}
         try:
             exec(SourceCode, LocalNameSpace)
@@ -259,11 +258,13 @@ def solve(
         assertions = ""
         for i in range(10):
             tmp = eval("str(input%d)" % (i + 1), LocalNameSpace)
-            assertions += (
-                "assert %s%s == "% (method_name, tmp)
-                + str(eval(method_name + tmp, LocalNameSpace))
-                + "\n"
-            )
+            res = str(eval(method_name + tmp, LocalNameSpace))
+            if res != "None":
+                assertions += (
+                    "assert %s%s == "% (method_name, tmp)
+                    + str(eval(method_name + tmp, LocalNameSpace))
+                    + "\n"
+                )
         print(
             "Assertions Generated",
             flush=True,

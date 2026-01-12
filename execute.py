@@ -74,7 +74,6 @@ if __name__ == '__main__':
     testgen.main()
     # python2dafny
     trans.main()
-    
-
+    # specgen
     specgen_input_process(env_config)
     specgen.main()

@@ -565,6 +565,50 @@ def realtime_eval(
 ):
     with open(CodePath, "r", encoding="utf-8") as DafnyFile:
         Code = DafnyFile.read()
+
+    # check syntax
+    process = subprocess.run(
+        "dafny test %s --no-verify --standard-libraries" % CodePath,
+        timeout=180,
+        capture_output=True,
+        shell = True
+    )
+    ret = process.returncode
+    match ret:
+        case 0:
+            status = "passed"
+            error_messages = []
+        case 2:
+            status = "syntax_error"
+            error_messages = []
+            try:
+                buggy_code = Code.split("\n")
+                report = process.stdout.decode().replace("\\r", "")
+                messages = re.findall(r'\.dfy(\([^\n]+)', report)
+                regex_messages = [
+                    re.match(
+                        r"\((?P<lineno>\d+),(?P<pos>\d+)\): (?P<error>.+)",
+                        message,
+                    )
+                    for message in messages
+                ]
+                error_messages = [
+                    {
+                        "content": buggy_code[int(regex_message.group("lineno"))-1],
+                        "line": int(regex_message.group("lineno")),
+                        "position": int(regex_message.group("pos")),
+                        "error_type": parse_errmsg(regex_message.group("error")),
+                    }
+                    for regex_message in regex_messages
+                ]
+                return status, error_messages
+            except:
+                pass
+        case -1:
+            status = "timeout"
+            error_messages = []
+            return status, error_messages
+
     TestCode = Code + "\n" + TestCase
     with open(CodePath, "w", encoding="utf-8") as DafnyFile:
         print(TestCode, file=DafnyFile, flush=True)
@@ -584,7 +628,7 @@ def realtime_eval(
             status = "passed"
             error_messages = []
         case 2:
-            status = "syntax_error"
+            status = "test_case_error"
             error_messages = []
             try:
                 buggy_code = TestCode.split("\n")
@@ -658,6 +702,10 @@ def solve(api_config, env_config, problem, testset):
             Path(env_config["translation_path"]).joinpath("trans.dfy"),
             testset["TestCase"],
         )
+        if status == "test_case_error":
+            print("Something wrong with test cases:")
+            print(error_messages)
+            return
         if status == "passed":
             return
         if status == "syntax_error" and old_status != "syntax_error" and old_status != "translate":
