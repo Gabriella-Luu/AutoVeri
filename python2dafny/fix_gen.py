@@ -660,7 +660,7 @@ def realtime_eval(
             try:
                 buggy_code = TestCode.split("\n")
                 report = process.stdout.decode().replace("\\r", "")
-                messages = re.findall(r".dfy(.+?)\\n", report)
+                messages = re.findall(r'\.dfy(\([^\n]+)', report)
                 regex_messages = [
                     re.match(
                         r"\((?P<lineno>\d+),(?P<pos>\d+)\): (?P<error>.+)",

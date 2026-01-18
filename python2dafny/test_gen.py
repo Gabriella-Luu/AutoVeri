@@ -35,6 +35,7 @@ def template(code):
             "You are good at generating test inputs for Python functions.",
             "",
             "Please generate ten groups of differentiated valid inputs for the following Python function.",
+            "Pay attention to the data types of input and output. When the data type is string, the data should be enclosed in quotation marks.",
             "Keep all input types strictly consistent, and avoid using floating-point numbers unless necessary.",
             "",
             "Given Python function:",
@@ -257,22 +258,28 @@ def solve(
         assertions = ""
         for i in range(env_config["test_cases_num"]):
             tmp = eval("str(input%d)" % (i + 1), LocalNameSpace)
-            res = str(eval(method_name + tmp, LocalNameSpace))
+            temp_res = eval(method_name + tmp, LocalNameSpace)
+            res = str(temp_res)
+            if type(temp_res) == str:
+                res = "'" + res + "'"
             if res != "None":
                 assertions += (
                     "assert %s%s == "% (method_name, tmp)
-                    + str(eval(method_name + tmp, LocalNameSpace))
+                    + res
                     + "\n"
                 )
-        break
-    
-    global func_calls, TmpVars, SrcName
-    func_calls = 0
-    TmpVars = {}
-    SrcName = ""
-    parsed = parse_cases(ast.parse(source=assertions).body)
-    testset["TestCase"] = parsed
-
+        
+        global func_calls, TmpVars, SrcName
+        func_calls = 0
+        TmpVars = {}
+        SrcName = ""
+        try:
+            parsed = parse_cases(ast.parse(source=assertions).body)
+            testset["TestCase"] = parsed
+            break
+        except:
+            continue
+        
     return testset
 
 def main():

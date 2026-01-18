@@ -110,7 +110,7 @@ def combine(trans_path, specs_path):
 def isLoopFound():
     with open(os.path.join(env_config["trans_output_path"], "trans.dfy"), "r") as file:
         content = file.read()
-    if " for " or " while " in content:
+    if " for " in content or " while " in content:
         return True
     return False
 
@@ -118,50 +118,55 @@ if __name__ == '__main__':
     args = parser.parse_args()
     env_config = get_config()
 
-    # clean
-    output_path = os.path.join(os.getcwd(), "output")
-    if os.path.exists(output_path):
-        shutil.rmtree(output_path)  # 删除整个文件夹
-        os.makedirs(output_path)    # 重新创建空文件夹
+    # step=0:testcases gen; step=1:python2dafny step=2:invgen; step=3:specgen
+    step = 2
+    isLoop = False
 
-    # testcases gen
-    testgen.main()
+    if step == 0:
+        # clean
+        output_path = os.path.join(os.getcwd(), "output")
+        if os.path.exists(output_path):
+            shutil.rmtree(output_path)  # 删除整个文件夹
+            os.makedirs(output_path)    # 重新创建空文件夹
 
-    # python2dafny
-    trans.main()
+        # testcases gen
+        testgen.main()
 
-    # invariants gen
-    loop_flag = isLoopFound()
-    if loop_flag:
-        invgen.main()
+    if step <= 1:
+        # python2dafny
+        trans.main()
 
-    # specs gen
-    specgen_input_process(env_config)
-    specgen.main()
+    if step <= 2:
+        # invariants gen
+        loop_flag = isLoopFound()
+        if loop_flag:
+            invgen.main()
 
-    # specs eval
-    eval_res = False
-    for i in range(env_config["max_specgen_num"]):
-        speceval.main()
-        eval_res = isSpecsCorrect()
+    if step <= 3:
+        # specs gen & eval
+        specgen_input_process(env_config)
+        eval_res = False
+        for i in range(env_config["max_specgen_num"]):
+            speceval.main()
+            eval_res = isSpecsCorrect()
+            if eval_res:
+                break
+            specgen.main()
+
         if eval_res:
-            break
-        specgen.main()
+            print("Specs generation finished.")
+        else:
+            print("Specs generation failed.")
 
-    if eval_res:
-        print("Specs generation finished.")
-    else:
-        print("Specs generation failed.")
+        # combine code and specs
+        if loop_flag:
+            combine(os.path.join(env_config["trans_output_path"], "trans_with_inv.dfy"), os.path.join(env_config["specs_output_path"], "specgen.dfy"))
+        else:
+            combine(os.path.join(env_config["trans_output_path"], "trans.dfy"), os.path.join(env_config["specs_output_path"], "specgen.dfy"))
 
-    # combine code and specs
-    if loop_flag:
-        combine(os.path.join(env_config["trans_output_path"], "trans_with_inv.dfy"), os.path.join(env_config["specs_output_path"], "specgen.dfy"))
-    else:
-        combine(os.path.join(env_config["trans_output_path"], "trans.dfy"), os.path.join(env_config["specs_output_path"], "specgen.dfy"))
-
-    # verify final program
-    print("-----------------Verification Start-----------------")
-    result = subprocess.run(["dafny",  "verify", "--allow-warnings", "--standard-libraries", os.path.join(env_config["trans_output_path"], "final_program.dfy")], capture_output=True, text=True)
-    print(result.stdout)
-    print(result.stderr)
-    print("-------------------------End-------------------------")
+        # verify final program
+        print("-----------------Verification Start-----------------")
+        result = subprocess.run(["dafny",  "verify", "--allow-warnings", "--standard-libraries", os.path.join(env_config["trans_output_path"], "final_program.dfy")], capture_output=True, text=True)
+        print(result.stdout)
+        print(result.stderr)
+        print("-------------------------End-------------------------")
