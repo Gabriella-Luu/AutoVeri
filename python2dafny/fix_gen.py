@@ -6,9 +6,10 @@ import re
 import copy
 import configparser
 import os
+import sys
 
 def get_config():
-    script_dir_path = "/Users/luyihan/Desktop/AutoVeri/"
+    script_dir_path = os.getcwd()
     config_path = os.path.join(script_dir_path, 'env.config')
     if not (os.path.exists(config_path)):
         print("env.config not found!!")
@@ -19,16 +20,14 @@ def get_config():
     api_config = dict()
     api_config["openai_api_key"] = config.get('DEFAULT', 'openai_api_key')
     api_config["openai_base_url"] = config.get('DEFAULT', 'openai_base_url')
-    api_config["deepseek_api_key"] = config.get('DEFAULT', 'deepseek_api_key')
-    api_config["deepseek_base_url"] = config.get('DEFAULT', 'deepseek_base_url')
     api_config["model"] = config.get('TRANS', 'model')
     api_config["temp"] = float(config.get('TRANS', 'temp'))
 
     env_config = dict()
-    env_config["input_json_path"] = config.get('DEFAULT', 'input_json_path')
-    env_config["translation_path"] = config.get('TRANS', 'translation_path')
+    env_config["input_json_path"] = os.path.join(os.getcwd(), "input/input.json")
+    env_config["translation_path"] = os.path.join(os.getcwd(), "output")
     env_config["max_fixing_iterations"] = int(config.get('TRANS', 'max_fixing_iterations'))
-    env_config["test_set_json_path"] = config.get('TRANS', 'test_set_json_path')
+    env_config["test_set_json_path"] = os.path.join(os.getcwd(), "output")
 
     return api_config, env_config
 
@@ -705,8 +704,9 @@ def solve(api_config, env_config, problem, testset):
         if status == "test_case_error":
             print("Something wrong with test cases:")
             print(error_messages)
-            return
+            sys.exit()
         if status == "passed":
+            print("Python to Dafny finished.")
             return
         if status == "syntax_error" and old_status != "syntax_error" and old_status != "translate":
             status, error_messages = old_status, old_error_messages
@@ -718,6 +718,8 @@ def solve(api_config, env_config, problem, testset):
             code = code.split("\n")
             code = ["" if line.startswith("import") else line for line in code]
             code = "\n".join(code)
+    print("python2dafny failed")
+    sys.exit()
 
 def main():
     api_config, env_config = get_config()

@@ -1,0 +1,1084 @@
+Name: check_greater
+Type: method
+Prefix:
+(arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+
+Body:
+{
+}
+---
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [1, 2, 3, 4, 5];
+  var v1 := 6;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := true;
+}
+
+Dafny program verifier finished with 2 verified, 0 errors
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [1, 2, 3, 4, 5];
+  var v1 := 6;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [1, 2, 3, 4, 5];
+  var v1 := 6;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [1, 2, 3, 4, 5];
+  var v1 := 6;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [1, 2, 3, 4, 5];
+  var v1 := 6;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [1, 2, 3, 4, 5];
+  var v1 := 6;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+/Users/luyihan/Desktop/AutoVeri/output Outcomes: [(-1, '\nDafny program verifier finished with 2 verified, 0 errors\n'), (0, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (1, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (2, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (3, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (4, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n')]
+---
+/Users/luyihan/Desktop/AutoVeri/output Dafny Statistics for test: [0, 1, 1, 1, 1, 1]
+---
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [10, 20, 30, 40, 50];
+  var v1 := 25;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+
+Dafny program verifier finished with 2 verified, 0 errors
+
+
+mutating input_value: false
+mutated input_value: true
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [10, 20, 30, 40, 50];
+  var v1 := 25;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := true;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: false
+mutated input_value: true
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [10, 20, 30, 40, 50];
+  var v1 := 25;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := true;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: false
+mutated input_value: true
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [10, 20, 30, 40, 50];
+  var v1 := 25;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := true;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: false
+mutated input_value: true
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [10, 20, 30, 40, 50];
+  var v1 := 25;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := true;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: false
+mutated input_value: true
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [10, 20, 30, 40, 50];
+  var v1 := 25;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := true;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+/Users/luyihan/Desktop/AutoVeri/output Outcomes: [(-1, '\nDafny program verifier finished with 2 verified, 0 errors\n'), (0, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (1, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (2, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (3, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (4, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n')]
+---
+/Users/luyihan/Desktop/AutoVeri/output Dafny Statistics for test: [0, 1, 1, 1, 1, 1]
+---
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [-10, -20, -30, -40, -50];
+  var v1 := -5;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := true;
+}
+
+Dafny program verifier finished with 2 verified, 0 errors
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [-10, -20, -30, -40, -50];
+  var v1 := -5;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [-10, -20, -30, -40, -50];
+  var v1 := -5;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [-10, -20, -30, -40, -50];
+  var v1 := -5;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [-10, -20, -30, -40, -50];
+  var v1 := -5;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [-10, -20, -30, -40, -50];
+  var v1 := -5;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+/Users/luyihan/Desktop/AutoVeri/output Outcomes: [(-1, '\nDafny program verifier finished with 2 verified, 0 errors\n'), (0, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (1, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (2, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (3, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (4, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n')]
+---
+/Users/luyihan/Desktop/AutoVeri/output Dafny Statistics for test: [0, 1, 1, 1, 1, 1]
+---
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [100, 200, 300, 400, 500];
+  var v1 := 600;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := true;
+}
+
+Dafny program verifier finished with 2 verified, 0 errors
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [100, 200, 300, 400, 500];
+  var v1 := 600;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [100, 200, 300, 400, 500];
+  var v1 := 600;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [100, 200, 300, 400, 500];
+  var v1 := 600;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [100, 200, 300, 400, 500];
+  var v1 := 600;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [100, 200, 300, 400, 500];
+  var v1 := 600;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+/Users/luyihan/Desktop/AutoVeri/output Outcomes: [(-1, '\nDafny program verifier finished with 2 verified, 0 errors\n'), (0, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (1, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (2, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (3, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (4, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n')]
+---
+/Users/luyihan/Desktop/AutoVeri/output Dafny Statistics for test: [0, 1, 1, 1, 1, 1]
+---
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [15, 25, 35, 45, 55];
+  var v1 := 60;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := true;
+}
+
+Dafny program verifier finished with 2 verified, 0 errors
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [15, 25, 35, 45, 55];
+  var v1 := 60;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [15, 25, 35, 45, 55];
+  var v1 := 60;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [15, 25, 35, 45, 55];
+  var v1 := 60;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [15, 25, 35, 45, 55];
+  var v1 := 60;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+mutating input_value: true
+mutated input_value: false
+
+------------
+Test Harness Code:
+-----------------
+method check_greater (arr: seq<int>, number: int) returns (res: bool)
+    requires |arr| > 0
+    ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+    ensures (res == false) <==> (exists i :: 0 <= i < |arr| && number <= arr[i])
+{
+  var v0 := [15, 25, 35, 45, 55];
+  var v1 := 60;
+  assume {:axiom} arr == v0;
+  //redundant asserts to make dafny happy
+  assert arr[0] == v0[0];
+  assert arr[1] == v0[1];
+  assert arr[2] == v0[2];
+  assert arr[3] == v0[3];
+  assert arr[4] == v0[4];
+  assume {:axiom} number == v1;
+  res := false;
+}
+output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+output/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved
+  |
+3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+
+/Users/luyihan/Desktop/AutoVeri/output Outcomes: [(-1, '\nDafny program verifier finished with 2 verified, 0 errors\n'), (0, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (1, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (2, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (3, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n'), (4, 'output/test_harness.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\noutput/test_harness.dfy(3,26): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures (res == true) <==> (forall i :: 0 <= i < |arr| ==> number > arr[i])\n  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n')]
+---
+/Users/luyihan/Desktop/AutoVeri/output Dafny Statistics for test: [0, 1, 1, 1, 1, 1]
+---
+/Users/luyihan/Desktop/AutoVeri/output Average Correctness: 1.0, Average Completeness: 1.0
+---

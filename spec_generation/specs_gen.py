@@ -6,12 +6,13 @@ from openai import OpenAI
 import configparser
 from .services import utils as utility
 from .services import dafny_verifyer as verifier
+import re
 
 # os.environ["http_proxy"] = "http://127.0.0.1:7890"
 # os.environ["https_proxy"] = "http://127.0.0.1:7890"
 
 def get_config():
-    script_dir_path = "/Users/luyihan/Desktop/AutoVeri/"
+    script_dir_path = os.getcwd()
     config_path = os.path.join(script_dir_path, 'env.config')
     if not (os.path.exists(config_path)):
         print("env.config not found!!")
@@ -22,37 +23,17 @@ def get_config():
     api_config = dict()
     api_config["openai_api_key"] = config.get('DEFAULT', 'openai_api_key')
     api_config["openai_base_url"] = config.get('DEFAULT', 'openai_base_url')
-    api_config["deepseek_api_key"] = config.get('DEFAULT', 'deepseek_api_key')
-    api_config["deepseek_base_url"] = config.get('DEFAULT', 'deepseek_base_url')
     api_config["model"] = config.get('SPECSGEN', 'model')
     api_config["temp"] = float(config.get('SPECSGEN', 'temp'))
 
     env_config = dict()
-    env_config["K_run"] = config.get('SPECSGEN', 'K_run')
-    env_config["cool_down_time"] = config.get('SPECSGEN', 'cool_down_time')
-    env_config["data_path"] = config.get('SPECSGEN', 'data_path')
-    env_config["base_output_path"] = config.get('SPECSGEN', 'base_output_path')
+    env_config["data_path"] = os.path.join(os.getcwd(), "input/specgen_input.json")
+    env_config["base_output_path"] = os.path.join(os.getcwd(), "output")
     return api_config, env_config
 
-
-def get_output_paths(_task, _temp, _K, _model, _base_path):
-    out_paths = dict()
-    common_path = "specs_" + "-" + _model + "-" + "temp_" + str(
-        _temp) + "-" + "k_" + str(_K)
-    
-    if os.path.exists(_base_path):
-        shutil.rmtree(_base_path)
-    os.makedirs(_base_path, exist_ok=True)
-        
-    # out_paths["saved_path"] = os.path.join(_base_path, common_path + ".json")
-    out_paths["dfy_src_path"] = os.path.join(_base_path, common_path + ".dfy")
-    out_paths["verification_path"] = os.path.join(_base_path, common_path + "_verification_log.txt")
-    return out_paths
-
-
 def get_specs_gen_prompt_template(_task):
-    script_dir_path = "/Users/luyihan/Desktop/AutoVeri/spec_generation"
-    prompt_path = os.path.join(script_dir_path, 'prompts/SPECS_GEN_TEMPLATE.file')
+    script_dir_path = os.getcwd()
+    prompt_path = os.path.join(script_dir_path, 'spec_generation/prompts/SPECS_GEN_TEMPLATE.file')
     if not (os.path.exists(prompt_path)):
         print("prompts/SPECS_GEN_TEMPLATE.file not found!!")
         return
@@ -77,7 +58,7 @@ def invoke_llm(model, messages, _temp, _key, _base):
         # top_p=0.8
     )
     result = response.choices[0].message.content
-    print(response.choices[0].message.content)
+    # print(response.choices[0].message.content)
     return result
 
 
@@ -101,29 +82,26 @@ def execute_signature_prompt(_api_config, _env_config):
     model = _api_config['model']
     prompt_ = get_specs_gen_prompt_template(task)
     messages = [{"role": "user", "content": prompt_}]
-    for run_count in range(1, int(_env_config["K_run"]) + 1):
-        output_paths = get_output_paths(_task=task, _temp=_api_config["temp"], _K=run_count,
-                                        _model=model,
-                                        _base_path=_env_config["base_output_path"])
-        try:
-            response = ""
-            if ("gpt" in model): 
-                response = invoke_llm(model=model, messages=messages, _temp=_api_config['temp'], _key=_api_config['openai_api_key'], _base=_api_config['openai_base_url'])
-            if ("deepseek" in model):
-                response = invoke_llm(model=model, messages=messages, _temp=_api_config['temp'], _key=_api_config['deepseek_api_key'], _base=_api_config['deepseek_base_url'])
-            
-            # code = verifier.parse_code(response)
-            utility.write_to_file(response, output_paths["dfy_src_path"])
-        except Exception as e:
-            traceback.print_exc() 
-            print("Error while processing => " + "in temperature =>" + str(
-                _api_config['temp']) + str(e))
-        # sleep(int(_env_config['cool_down_time']))
+   
+    try:
+        response = ""
+        if ("gpt" in model): 
+            response = invoke_llm(model=model, messages=messages, _temp=_api_config['temp'], _key=_api_config['openai_api_key'], _base=_api_config['openai_base_url'])
+        if ("deepseek" in model):
+            response = invoke_llm(model=model, messages=messages, _temp=_api_config['temp'], _key=_api_config['deepseek_api_key'], _base=_api_config['deepseek_base_url'])
+        
+        specs = re.search(r'```dafny(.*?)```', response, flags=re.DOTALL).group(1).strip()
+        if specs[-1] != '}':
+            specs = specs + "\n{\n}"
+        utility.write_to_file(specs, os.path.join(_env_config["base_output_path"], "specgen.dfy"))
+    except Exception as e:
+        traceback.print_exc() 
+        print("Error while processing => " + "in temperature =>" + str(
+            _api_config['temp']) + str(e))
 
 def main():
     api_config, env_config = get_config()
     execute_signature_prompt(api_config, env_config)
-    print("Done")
 
 if __name__ == '__main__':
     main()

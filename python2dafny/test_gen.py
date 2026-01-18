@@ -7,7 +7,7 @@ from typing import Tuple
 import configparser
 
 def get_config():
-    script_dir_path = "/Users/luyihan/Desktop/AutoVeri/"
+    script_dir_path = os.getcwd()
     config_path = os.path.join(script_dir_path, 'env.config')
     if not (os.path.exists(config_path)):
         print("env.config not found!!")
@@ -18,17 +18,14 @@ def get_config():
     api_config = dict()
     api_config["openai_api_key"] = config.get('DEFAULT', 'openai_api_key')
     api_config["openai_base_url"] = config.get('DEFAULT', 'openai_base_url')
-    api_config["deepseek_api_key"] = config.get('DEFAULT', 'deepseek_api_key')
-    api_config["deepseek_base_url"] = config.get('DEFAULT', 'deepseek_base_url')
     api_config["model"] = config.get('TRANS', 'model')
     api_config["temp"] = float(config.get('TRANS', 'temp'))
 
     env_config = dict()
-    env_config["input_json_path"] = config.get('DEFAULT', 'input_json_path')
-    env_config["translation_path"] = config.get('TRANS', 'translation_path')
-    env_config["test_cases_num"] = int(config.get('TRANS', 'test_cases_num'))
-    env_config["test_set_json_path"] = config.get('TRANS', 'test_set_json_path')
+    env_config["input_json_path"] = os.path.join(os.getcwd(), "input/input.json")
+    env_config["test_set_json_path"] = os.path.join(os.getcwd(), "output")
     env_config["max_test_gen_iterations"] = int(config.get('TRANS', 'max_test_gen_iterations'))
+    env_config["test_cases_num"] = int(config.get('TRANS', 'test_cases_num'))
     return api_config, env_config
 
 def template(code):
@@ -38,6 +35,8 @@ def template(code):
             "You are good at generating test inputs for Python functions.",
             "",
             "Please generate ten groups of differentiated valid inputs for the following Python function.",
+            "Keep all input types strictly consistent, and avoid using floating-point numbers unless necessary.",
+            "",
             "Given Python function:",
             "```python",
             code,
@@ -225,7 +224,6 @@ def solve(
     for iterations in range(env_config["max_test_gen_iterations"]):
         testset = {"TestCase": ""}
 
-        # for iterations in range(env_config["test_cases_num"]):
         prompt = template(SourceCode)
         if ("gpt" in api_config["model"]): 
             client = OpenAI(api_key=api_config["openai_api_key"], base_url=api_config["openai_base_url"])
@@ -244,7 +242,8 @@ def solve(
         )
         if match:
             inputs = match.group("code")
-    
+
+        # inputs = 'input1=([1, 2, 3, 4, 5], 6)\ninput2=([10, 20, 30, 40, 50], 25)\ninput3=([100, 200, 300, 400, 500], 600)\ninput4=([-10, -20, -30, -40, -50], -5)\ninput5=([0, 0, 0, 0, 0], 1)\ninput6=([1, 1, 1, 1, 1], 0)\ninput7=([10, 9, 8, 7, 6], 5)\ninput8=([-1, -2, -3, -4, -5], -6)\ninput9=([100, 99, 98, 97, 96], 101)\ninput10=([0, 0, 0, 0, 0], 0)'
         LocalNameSpace = {}
         try:
             exec(SourceCode, LocalNameSpace)
@@ -256,7 +255,7 @@ def solve(
         if match:
             method_name = match.group(1)
         assertions = ""
-        for i in range(10):
+        for i in range(env_config["test_cases_num"]):
             tmp = eval("str(input%d)" % (i + 1), LocalNameSpace)
             res = str(eval(method_name + tmp, LocalNameSpace))
             if res != "None":
@@ -265,10 +264,6 @@ def solve(
                     + str(eval(method_name + tmp, LocalNameSpace))
                     + "\n"
                 )
-        print(
-            "Assertions Generated",
-            flush=True,
-        )
         break
     
     global func_calls, TmpVars, SrcName
@@ -292,15 +287,11 @@ def main():
     if testset != "":
         passed += 1
 
-    print(
-        "%d/%d(%.2f%%) testcases successfully generated"
-        % (passed, len(testset), passed * 100.0 / len(testset))
-    )
-
     with open(env_config["test_set_json_path"] + "/test_cases.json", "w", encoding="utf-8") as JSON:
         json.dump(testset, JSON)
 
-    print("Done")
-
+    print(
+        "Testcases generation finished."
+    )
 if __name__ == '__main__':
     main()

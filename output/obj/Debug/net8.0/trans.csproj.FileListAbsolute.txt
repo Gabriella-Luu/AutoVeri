@@ -1,0 +1,15 @@
+/Users/luyihan/Desktop/AutoVeri/output/obj/Debug/net8.0/trans.GeneratedMSBuildEditorConfig.editorconfig
+/Users/luyihan/Desktop/AutoVeri/output/obj/Debug/net8.0/trans.AssemblyInfoInputs.cache
+/Users/luyihan/Desktop/AutoVeri/output/obj/Debug/net8.0/trans.AssemblyInfo.cs
+/Users/luyihan/Desktop/AutoVeri/output/obj/Debug/net8.0/trans.csproj.CoreCompileInputs.cache
+/Users/luyihan/Desktop/AutoVeri/output/obj/Debug/net8.0/trans.sourcelink.json
+/Users/luyihan/Desktop/AutoVeri/output/trans
+/Users/luyihan/Desktop/AutoVeri/output/obj/Debug/net8.0/trans.dll
+/Users/luyihan/Desktop/AutoVeri/output/obj/Debug/net8.0/refint/trans.dll
+/Users/luyihan/Desktop/AutoVeri/output/obj/Debug/net8.0/trans.pdb
+/Users/luyihan/Desktop/AutoVeri/output/trans.deps.json
+/Users/luyihan/Desktop/AutoVeri/output/obj/Debug/net8.0/trans.genruntimeconfig.cache
+/Users/luyihan/Desktop/AutoVeri/output/trans.runtimeconfig.json
+/Users/luyihan/Desktop/AutoVeri/output/trans.dll
+/Users/luyihan/Desktop/AutoVeri/output/obj/Debug/net8.0/ref/trans.dll
+/Users/luyihan/Desktop/AutoVeri/output/trans.pdb

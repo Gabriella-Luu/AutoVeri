@@ -17,7 +17,7 @@
             "name": "speceval",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/spec_evaluation/mutation_test/run_dataset.py",
+            "program": "${workspaceFolder}/spec_evaluation/eval_dafny_spec.py",
             "console": "integratedTerminal",
             // "justMyCode": false,
             "python": "python3"

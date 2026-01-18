@@ -1,1 +1,0 @@
-{"TestCase": "method{:test} check(){\nvar call0:= prime_num(-10) ;\nvar call1:= prime_num(0) ;\nvar call2:= prime_num(10) ;\nvar call3:= prime_num(13) ;\nvar call4:= prime_num(17) ;\nvar call5:= prime_num(100) ;\nexpect call0==false;\nexpect call1==false;\nexpect call2==false;\nexpect call3==true;\nexpect call4==true;\nexpect call5==false;\n}\n"}
