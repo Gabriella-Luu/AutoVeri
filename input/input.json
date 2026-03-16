@@ -1,5 +1,5 @@
 {
-    "task": "Write a python function to remove first and last occurrence of a given character from the string.",
-    "python_code": "def remove_Occ(s,ch): \n    for i in range(len(s)): \n        if (s[i] == ch): \n            s = s[0 : i] + s[i + 1:] \n            break\n    for i in range(len(s) - 1,-1,-1):  \n        if (s[i] == ch): \n            s = s[0 : i] + s[i + 1:] \n            break\n    return s "
+    "task": "Write a function to multiply two integers without using the * operator in python.",
+    "python_code": "def multiply_int(x, y):\n    if y < 0:\n        return -multiply_int(x, -y)\n    elif y == 0:\n        return 0\n    elif y == 1:\n        return x\n    else:\n        return x + multiply_int(x, y - 1)"
 
 }

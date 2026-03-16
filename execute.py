@@ -5,6 +5,7 @@ import json
 import re
 import shutil
 import subprocess
+import sys
 
 import python2dafny.fix_gen as trans
 import python2dafny.test_gen as testgen
@@ -119,7 +120,7 @@ if __name__ == '__main__':
     env_config = get_config()
 
     # step=0:testcases gen; step=1:python2dafny step=2:invgen; step=3:specgen
-    step = 2
+    step = 0
     isLoop = False
 
     if step == 0:
@@ -147,14 +148,16 @@ if __name__ == '__main__':
         specgen_input_process(env_config)
         eval_res = False
         for i in range(env_config["max_specgen_num"]):
+            specgen.main()
             speceval.main()
             eval_res = isSpecsCorrect()
+            # eval_res = True
             if eval_res:
                 break
-            specgen.main()
 
         if eval_res:
             print("Specs generation finished.")
+            sys.exit()
         else:
             print("Specs generation failed.")
 

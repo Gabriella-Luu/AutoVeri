@@ -392,7 +392,7 @@ def template(code, status, error_messages):
                     "You are an expert Dafny programmer.",
                     "You are good at translating Python into Dafny.",
                     "",
-                    "Please Translate the following Python function into Dafny.",
+                    "Please Translate the following Python function into Dafny method.",
                     "Given Python function:",
                     "```python",
                     code,
@@ -400,7 +400,7 @@ def template(code, status, error_messages):
                     "",
                     "You MUST return the translation in the following format:",
                     "```dafny",
-                    "// Dafny code",
+                    "// Dafny method code",
                     "```",
                     "Here are some examples of translating Python into Dafny:",
                 ]

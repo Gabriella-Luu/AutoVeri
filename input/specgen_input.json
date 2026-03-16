@@ -1,1 +1,1 @@
-{"task_description": "Write a dafny method to remove first and last occurrence of a given character from the string.", "method_signature": "method remove_Occ(s: array<char>, ch: char) returns (res: array<char>)"}
+{"task_description": "Write a method to multiply two integers without using the * operator in dafny.", "method_signature": "method multiply_int(x: int, y: int) returns (result: int)"}

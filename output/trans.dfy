@@ -1,28 +1,11 @@
-import opened Std.Collections.Seq
-import opened Std.Strings
-import opened Std.Math
-import opened Std.Arithmetic.Power
-method remove_Occ(s: array<char>, ch: char) returns (res: array<char>) 
+method tuple_modulo(test_tup1:seq<int>, test_tup2:seq<int>) returns (res:seq<int>) 
+//  requires |test_tup1| == |test_tup2|
 {
-    var i: int;
-    var arr: array<char> := s;
-    for i := 0 to arr.Length
-    { 
-        if (arr[i] == ch) 
-        { 
-            var temp: seq<char> := arr[0 .. i] + arr[i + 1 .. arr.Length]; 
-            arr := array(temp);
-            break;
-        }
-    }
-    for i := arr.Length - 1 downto 0
-    { 
-        if (arr[i] == ch) 
-        { 
-            var temp: seq<char> := arr[0 .. i] + arr[i + 1 .. arr.Length]; 
-            arr := array(temp);
-            break;
-        }
-    }
-    res := arr;
+  res := [];
+  for i := 0 to |test_tup1| 
+    invariant |res| == i
+    invariant forall k :: 0 <= k < i ==> res[k] == test_tup1[k] / test_tup2[k]
+  {
+    res := res + [test_tup1[i] / test_tup2[i]];
+  }
 }
