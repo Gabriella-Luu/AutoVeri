@@ -38,9 +38,9 @@ def get_input(env_config):
 
     task = problems["task"]
     python_code = problems["python_code"]
-    # test_cases = problems["test_cases"]
+    spec_test_cases = problems["spec_test_cases"]
 
-    return task, python_code
+    return task, python_code, spec_test_cases
 
 def get_dafny_code(env_config):
     file = env_config["trans_output_path"] + '/' + "trans.dfy"
@@ -48,7 +48,7 @@ def get_dafny_code(env_config):
         return reader.read()
 
 def specgen_input_process(env_config):
-    task, python_code = get_input(env_config)
+    task, python_code, spec_test_cases = get_input(env_config)
     task_description = task.replace("python", "dafny").replace("function", "method")
 
     pattern = r'def\s+(\w+)\s*\('
@@ -64,7 +64,8 @@ def specgen_input_process(env_config):
 
     content = {
        "task_description": task_description,
-       "method_signature": method_signature
+       "method_signature": method_signature,
+       "behavior_examples": spec_test_cases
     }
     content = json.dumps(content)
 

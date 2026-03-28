@@ -1,5 +1,26 @@
 {
     "task": "Write a function to multiply two integers without using the * operator in python.",
-    "python_code": "def multiply_int(x, y):\n    if y < 0:\n        return -multiply_int(x, -y)\n    elif y == 0:\n        return 0\n    elif y == 1:\n        return x\n    else:\n        return x + multiply_int(x, y - 1)"
-
+    "python_code": "def multiply_int(x, y):\n    if y < 0:\n        return -multiply_int(x, -y)\n    elif y == 0:\n        return 0\n    elif y == 1:\n        return x\n    else:\n        return x + multiply_int(x, y - 1)",
+    "spec_test_cases": [
+        {
+            "inputs": [2, 3],
+            "expected_output": 6
+        },
+        {
+            "inputs": [5, 1],
+            "expected_output": 5
+        },
+        {
+            "inputs": [10, 0],
+            "expected_output": 0
+        },
+        {
+            "inputs": [3, -2],
+            "expected_output": -6
+        },
+        {
+            "inputs": [-4, -3],
+            "expected_output": 12
+        }
+    ]
 }

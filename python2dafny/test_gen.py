@@ -223,13 +223,13 @@ def solve(
     SourceCode: str,
 ):
     for iterations in range(env_config["max_test_gen_iterations"]):
-        testset = {"TestCase": ""}
+        testset = {"TranslationTestCase": ""}
 
         prompt = template(SourceCode)
-        if ("gpt" in api_config["model"]): 
-            client = OpenAI(api_key=api_config["openai_api_key"], base_url=api_config["openai_base_url"])
-        if ("deepseek" in api_config["model"]): 
-            client = OpenAI(api_key=api_config["deepseek_api_key"], base_url=api_config["deepseek_base_url"])
+        client = OpenAI(
+            api_key=api_config["openai_api_key"],
+            base_url=api_config["openai_base_url"],
+        )
 
         response = client.beta.chat.completions.parse(
             model=api_config["model"],
@@ -275,7 +275,7 @@ def solve(
         SrcName = ""
         try:
             parsed = parse_cases(ast.parse(source=assertions).body)
-            testset["TestCase"] = parsed
+            testset["TranslationTestCase"] = parsed
             break
         except:
             continue
@@ -294,7 +294,7 @@ def main():
     if testset != "":
         passed += 1
 
-    with open(env_config["test_set_json_path"] + "/test_cases.json", "w", encoding="utf-8") as JSON:
+    with open(env_config["test_set_json_path"] + "/translation_test_cases.json", "w", encoding="utf-8") as JSON:
         json.dump(testset, JSON)
 
     print(

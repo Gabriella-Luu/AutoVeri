@@ -1,1 +1,0 @@
-{"task_description": "Write a method to multiply two integers without using the * operator in dafny.", "method_signature": "method multiply_int(x: int, y: int) returns (result: int)"}

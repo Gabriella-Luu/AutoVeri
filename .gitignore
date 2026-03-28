@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.venv/
+
+# Local IDE settings
+.vscode/
+
+# Local runtime config
+env.config
+
+# Generated intermediate/output files
+input/specgen_input.json
+output/*
+!output/.gitkeep

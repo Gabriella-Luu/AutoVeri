@@ -7,6 +7,7 @@ import configparser
 from .services import utils as utility
 from .services import dafny_verifyer as verifier
 import re
+from common.testcase_utils import format_behavior_examples
 
 # os.environ["http_proxy"] = "http://127.0.0.1:7890"
 # os.environ["https_proxy"] = "http://127.0.0.1:7890"
@@ -82,13 +83,27 @@ def execute_signature_prompt(_api_config, _env_config):
     model = _api_config['model']
     prompt_ = get_specs_gen_prompt_template(task)
     messages = [{"role": "user", "content": prompt_}]
+    behavior_examples = task.get("behavior_examples", [])
+    if behavior_examples:
+        examples_prompt = "\n".join(
+            [
+                "The following behavior examples are authoritative requirement-level examples.",
+                "Generate requires/ensures that are consistent with them.",
+                "Do not infer expected outputs from the current Python implementation.",
+                "",
+                format_behavior_examples(behavior_examples),
+            ]
+        )
+        messages.append({"role": "user", "content": examples_prompt})
    
     try:
-        response = ""
-        if ("gpt" in model): 
-            response = invoke_llm(model=model, messages=messages, _temp=_api_config['temp'], _key=_api_config['openai_api_key'], _base=_api_config['openai_base_url'])
-        if ("deepseek" in model):
-            response = invoke_llm(model=model, messages=messages, _temp=_api_config['temp'], _key=_api_config['deepseek_api_key'], _base=_api_config['deepseek_base_url'])
+        response = invoke_llm(
+            model=model,
+            messages=messages,
+            _temp=_api_config['temp'],
+            _key=_api_config['openai_api_key'],
+            _base=_api_config['openai_base_url'],
+        )
         
         specs = re.search(r'```dafny(.*?)```', response, flags=re.DOTALL).group(1).strip()
         if specs[-1] != '}':

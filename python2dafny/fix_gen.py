@@ -503,10 +503,10 @@ def generate(
 ):
     prompt = template(SourceCode, status, error_messages)
     model = api_config["model"]
-    if ("gpt" in model): 
-        client = OpenAI(api_key=api_config["openai_api_key"], base_url=api_config["openai_base_url"])
-    if ("deepseek" in model): 
-        client = OpenAI(api_key=api_config["deepseek_api_key"], base_url=api_config["deepseek_base_url"])
+    client = OpenAI(
+        api_key=api_config["openai_api_key"],
+        base_url=api_config["openai_base_url"],
+    )
     response = client.beta.chat.completions.parse(
         model=model,
         messages=[{"role": "user", "content": prompt}],
@@ -699,7 +699,7 @@ def solve(api_config, env_config, problem, testset):
         old_error_messages = copy.deepcopy(error_messages)
         status, error_messages = realtime_eval(
             Path(env_config["translation_path"]).joinpath("trans.dfy"),
-            testset["TestCase"],
+            testset["TranslationTestCase"],
         )
         if status == "test_case_error":
             print("Something wrong with test cases:")
@@ -726,7 +726,7 @@ def main():
 
     with open(env_config["input_json_path"], "r", encoding="utf-8") as JSON:
         problem = json.load(JSON)
-    with open(env_config["test_set_json_path"] + "/test_cases.json", "r", encoding="utf-8") as JSON:
+    with open(env_config["test_set_json_path"] + "/translation_test_cases.json", "r", encoding="utf-8") as JSON:
         testset = json.load(JSON)
 
     solve(api_config, env_config, problem, testset)
